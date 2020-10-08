@@ -9,15 +9,15 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="articles">
-      <v-col v-for="(article, index) in articles" :key="index" cols="12" lg="4" sm="6">
+    <v-row>
+      <v-col v-for="n in 5" :key="n" cols="12" lg="4" sm="6">
         <v-card class="mx-auto" dark>
           <v-sheet class="pa-3" color="#25A18E">
-            <span class="text-h5">{{article.title}}</span>
+            <span class="text-h5">Why ML is important?</span>
           </v-sheet>
 
           <v-sheet class="px-4 pt-4 black--text" style="cursor: pointer;" color="#69DDCC">
-            <span>{{article.content}}</span>
+            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit voluptate nemo sed asperiores. Neque facere, odio voluptate ex ullam dignissimos!d Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam molestias ut porro, at blanditiis voluptatem nulla. Maxime eius architecto consequatur.</span>
             <v-row>
               <v-col cols="12" align="end">
                 <v-dialog width="650px">
@@ -33,12 +33,12 @@
                   <v-card class="container grey lighten-1 black--text">
                     <v-row class="px-5 py-2">
                       <v-col cols="12">
-                        <span class="text-h4">{{article.title}}</span>
+                        <span class="text-h4">Why ML is important?</span>
                       </v-col>
                     </v-row>
                     <v-row class="px-5 py-2 grey lighten-5">
                       <v-col cols="12">
-                        <span>{{article.content}}</span>
+                        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum molestias et aperiam. Fugiat voluptates laborum libero, aut animi ratione aliquam minus perferendis reprehenderit exercitationem atque sapiente maxime dolor magnam unde pariatur sequi nisi commodi rem quos mollitia error aperiam. Minus quis aliquam nostrum rerum saepe ipsum veniam illum repellat voluptatibus inventore perferendis ducimus, omnis molestiae autem laboriosam ullam architecto libero error. Nisi repellat veniam nam doloribus, animi sunt vel ad blanditiis ut laboriosam, nemo consectetur iusto pariatur, minus quod facere voluptas excepturi! Natus, ullam exercitationem. Cumque omnis debitis nihil quam facere repellat exercitationem suscipit, aut placeat animi officia neque. Iste.</span>
                       </v-col>
                     </v-row>
                     <v-row class="px-5 grey lighten-2">
@@ -46,19 +46,19 @@
                         <v-avatar color="#242423">
                           <v-img src="https://cdn.vuetifyjs.com/images/john.jpg"></v-img>
                         </v-avatar>
-                        <span class="ml-2 body-1 font-weight-bold">{{article.author}}</span>
+                        <span class="ml-2 body-1 font-weight-bold">Ankan Dutta</span>
                       </v-col>
                       <v-col cols="6" class="my-auto pl-4">
                         <div class="float-right">
                           <v-btn class="ma-1" text icon @click="colorChange()">
                             <v-icon :color="redColor">mdi-heart</v-icon>
                           </v-btn>
-                          <span class="subtitle-2 mr-1">{{article.likeCount}}</span>
+                          <span class="subtitle-2 mr-1">256</span>
                           <span class="mx-1"></span>
                           <v-btn class="ma-1" text icon>
                             <v-icon>mdi-message-text</v-icon>
                           </v-btn>
-                          <span class="subtitle-2">{{article.commentCount}}</span>
+                          <span class="subtitle-2">45</span>
                         </div>
                       </v-col>
                     </v-row>
@@ -68,20 +68,15 @@
                       </v-col>
                       <v-col cols="12">
                         <v-list>
-                          <v-card
-                            class="mb-2"
-                            v-for="(comment, index2) in article.comments"
-                            :key="index2"
-                          >
+                          <v-card class="mb-2" v-for="m in 5" :key="m">
                             <v-list-item>
                               <v-list-item-avatar>
                                 <img src="https://cdn.vuetifyjs.com/images/lists/2.jpg" />
                               </v-list-item-avatar>
                               <v-list-item-content>
-                                <v-list-item-title>{{comment.name}}</v-list-item-title>
+                                <v-list-item-title>Ankan Dutta</v-list-item-title>
                                 <v-list-item-subtitle class="text-wrap">
-                                  <span class="font-weight-bold">{{comment.time}}</span>
-                                  &mdash; {{comment.message}}
+                                  <span class="font-weight-bold">13-06-2020 14:06</span> &mdash; Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime magnam sapiente aperiam praesentium, amet id iusto hic labore atque consequuntur!
                                 </v-list-item-subtitle>
                               </v-list-item-content>
                             </v-list-item>
@@ -144,22 +139,19 @@
 </template>
 
 <script>
-import db from '../firebase'
+import db from 'firebase'
 
 export default {
-  created () {
-    db.collection('articles')
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          const article = doc.data()
-          article.id = doc.id
-          this.articles.push(article)
+  create () {
+    db.collection('articles').get(snapshot => {
+      snapshot
+        .forEach(doc => {
+          this.articles = doc.data()
         })
-      })
-      .then(() => {
-        console.log(this.articles)
-      })
+        .then(() => {
+          console.log(this.articles)
+        })
+    })
   },
 
   data () {

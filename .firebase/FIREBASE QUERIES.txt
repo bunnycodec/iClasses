@@ -1,0 +1,98 @@
+Firebase Queries ...
+
+To Add Data
+------------------------
+'users' is the name of collection at Firestore
+'db' is the reference of the firestore which we exported from 
+import db from 'firebase/index'
+
+#Embedded Code ...
+####
+    db.collection('users').add({
+      name: this.name,
+      age: this.age,
+      slug: this.slug
+    }).then(() => {
+      // Redirecting after adding an item
+      this.$router.push({name: 'Home'})
+    }).catch(err => {
+      // For Error
+      console.log(err)
+    })
+####
+
+To Retrieve Data
+------------------------
+Let localUsers=[] for using in the local vue file
+'users' is the name of collection at Firestore
+'db' is the reference of the firestore which we exported from 
+import db from 'firebase/index'
+
+#Embedded Code ...
+####
+    db.collection('users').get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        let user = doc.data()
+        user.id = doc.id
+        this.localUsers.push(user)
+      })
+    })
+####
+
+To Delete Data
+------------------------
+Let localUsers=[] for using in the local vue file
+'users' is the name of collection at Firestore
+'id' is the unique id of a document which you want to delete
+'db' is the reference of the firestore which we exported from 
+import db from 'firebase/index'
+
+#Embedded Code ...
+####
+    db.collection('users').doc(id).delete()
+    .then(() => {
+      // For Instant Reflection on the Page
+      this.localUsers = this.localUsers.filter(user => {
+        return user.id != id
+      })
+    })
+####
+
+To Search for Particular Datas
+------------------------
+'user' is the local variable for storing the object, if it is more than one object then user=[] else user=null
+'users' is the name of collection at Firestore
+'db' is the reference of the firestore which we exported from 
+import db from 'firebase/index'
+
+#Embedded Code ...
+####
+    db.collection('users').where('name', '==', 'Sunny Kumar').get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        this.user = doc.data()
+        this.user.id = doc.id
+      })
+    })
+####
+
+To Update Data
+------------------------
+Let localUser=[] for using in the local vue file
+'users' is the name of collection at Firestore
+'id' is the unique id of a document which you want to update
+'db' is the reference of the firestore which we exported from 
+import db from 'firebase/index'
+
+#Embedded Code ...
+####
+    db.collection('users').doc(id).update({
+      title: this.localUser.title,
+      name: this.localUser.name
+    }).then(() => {
+      this.$router.push({name: 'Home'})
+    }).catch(err => {
+      console.log(err)
+    })
+####
